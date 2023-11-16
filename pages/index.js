@@ -11,6 +11,8 @@ export default function HomePage() {
   const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
   const atmABI = atm_abi.abi;
 
+  const options = { gasLimit: 1000000 };
+
   const getWallet = async() => {
     if (window.ethereum) {
       setEthWallet(window.ethereum);
@@ -61,7 +63,8 @@ export default function HomePage() {
 
   const deposit = async() => {
     if (atm) {
-      let tx = await atm.deposit(1);
+      var amount = parseInt(document.getElementById("amountid").value)
+      let tx = await atm.deposit(amount);
       await tx.wait()
       getBalance();
     }
@@ -69,7 +72,8 @@ export default function HomePage() {
 
   const withdraw = async() => {
     if (atm) {
-      let tx = await atm.withdraw(1);
+      var amount = parseInt(document.getElementById("amountid").value)
+      let tx = await atm.withdraw(amount);
       await tx.wait()
       getBalance();
     }
@@ -83,7 +87,7 @@ export default function HomePage() {
 
     // Check to see if user is connected. If not, connect to their account
     if (!account) {
-      return <button onClick={connectAccount}>Please connect your Metamask wallet</button>
+      return <button onClick={connectAccount}>Connect your wallet using Metamask</button>
     }
 
     if (balance == undefined) {
@@ -92,10 +96,13 @@ export default function HomePage() {
 
     return (
       <div>
-        <p>Your Account: {account}</p>
-        <p>Your Balance: {balance}</p>
-        <button onClick={deposit}>Deposit 1 ETH</button>
-        <button onClick={withdraw}>Withdraw 1 ETH</button>
+        <p>Public Address: {account}</p>
+        <p>Balance: {balance}</p>
+        <b>Amount:</b> <input id="amountid" type="number" min="1"></input>
+        <br></br>
+        <br></br>
+        <button onClick={deposit}>Deposit</button>
+        <button onClick={withdraw}>Withdraw</button>
       </div>
     )
   }
@@ -104,7 +111,7 @@ export default function HomePage() {
 
   return (
     <main className="container">
-      <header><h1>Welcome to the Metacrafters ATM!</h1></header>
+      <header><h1>Welcome to the POGGERS ATM!</h1></header>
       {initUser()}
       <style jsx>{`
         .container {
