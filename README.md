@@ -9,8 +9,10 @@ The program has three functions
 This function allows you to deposit a given amount
 ### Withraw
 This function allows you to deposit a given amount
-### Balance
-This function updates the balance everytime you open the atm or make a transaction
+### Transfer
+This function allows you to transfer a given amount to an address
+### Pay Bills
+This function allows you to pay either the electricity or water for a given period of months
 
 ## Getting Started
 
