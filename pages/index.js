@@ -79,6 +79,36 @@ export default function HomePage() {
     }
   }
 
+  const transfer = async() => {
+    if (atm) {
+      var address = parseInt(document.getElementById("address").value)
+      var amount = parseInt(document.getElementById("transamountid").value)
+      let tx = await atm.transferamt(address, amount);
+      await tx.wait()
+      getBalance();
+    }
+  }
+
+  const payelec = async() => {
+    if (atm) {
+      var amount = parseInt(document.getElementById("amountid").value)
+      var months = parseInt(document.getElementById("billsmonths").value)
+      let tx = await atm.paybills(1, months);
+      await tx.wait()
+      getBalance();
+    }
+  }
+
+  const paywater = async() => {
+    if (atm) {
+      var amount = parseInt(document.getElementById("amountid").value)
+      var months = parseInt(document.getElementById("billsmonths").value)
+      let tx = await atm.paybills(2, months);
+      await tx.wait()
+      getBalance();
+    }
+  }
+
   const initUser = () => {
     // Check to see if user has Metamask
     if (!ethWallet) {
@@ -103,6 +133,27 @@ export default function HomePage() {
         <br></br>
         <button onClick={deposit}>Deposit</button>
         <button onClick={withdraw}>Withdraw</button>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <h3>Transfer</h3>
+        <b>Amount:</b> <input id="transamountid" type="number" min="1"></input> 
+        <br></br>
+        <b>Address:</b> <input id="address" type="text" minlength="40"></input>
+        <br></br>
+        <br></br>
+        <button onClick={transfer}>Transfer</button>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <h3>Pay Bills</h3>
+        <b>Months:</b> <input id="billsmonths" type="number" min="1"></input>
+        <br></br>
+        <b>Electricity Bill (20/month):</b> <button onClick={payelec}>Pay</button>
+        <br></br>
+        <b>Water Bill (15/month):</b> <button onClick={paywater}>Pay  </button>
       </div>
     )
   }
@@ -111,7 +162,7 @@ export default function HomePage() {
 
   return (
     <main className="container">
-      <header><h1>Welcome to the POGGERS ATM!</h1></header>
+      <header><h1>POGGERS ATM</h1></header>
       {initUser()}
       <style jsx>{`
         .container {
